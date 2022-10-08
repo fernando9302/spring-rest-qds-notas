@@ -62,6 +62,7 @@ class NotaServiceImplTest {
         Mockito.when(iAlumnoSeccionRepository.findById(1)).thenReturn(Optional.of(new AlumnoSeccion(1)));
         Mockito.when(iNotaRepository.save(any())).thenReturn(new Nota(1, new AlumnoSeccion(1), new TipoEvaluacion(3) ));
         Mockito.when(iNotaRepository.findById(any())).thenReturn(Optional.of(new Nota(1, new AlumnoSeccion(1), new TipoEvaluacion(3) )));
+
     }
 
     @Test
@@ -81,7 +82,6 @@ class NotaServiceImplTest {
     void crearNota(){
         GenericoResponse<NotaDto> nota = notaService.crearNota(new NotaRequest(1,2,3, 18, 6));
         assertNotNull(nota);
-        assertNotNull(nota.getRespuesta());
     }
 
     @Test
@@ -97,7 +97,7 @@ class NotaServiceImplTest {
         assertEquals(thrownSeccionNulo.getMessage(), "El campo idSeccion debe ser enviado");
         //Con Calificacion Nulo
         NegocioValidacionException thrownCalificacionNulo =assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,2,3, null, 6));});
-        assertEquals(thrownCalificacionNulo.getMessage(), "El campo idCalificacion debe ser enviado");
+        assertEquals(thrownCalificacionNulo.getMessage(), "El campo calificacion debe ser enviado");
     }
 
     @Test

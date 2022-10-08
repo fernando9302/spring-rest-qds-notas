@@ -34,9 +34,4 @@ public class AlumnoSeccionServiceImpl implements IAlumnoSeccionService {
         return new GenericoResponse(iAlumnoSeccionRepository.findAllBySeccionId(idSeccion).stream().map(x-> mapperAlumno.map(x, AlumnoDto.class)).collect(Collectors.toList()));
     }
 
-    @Override
-    public GenericoResponse<List<SeccionDto>>listarSeccionesPorAlumno(Integer idAlumno) {
-
-        return new GenericoResponse(iAlumnoSeccionRepository.findAllBySeccionId(idAlumno).stream().map(x-> mapperAlumno.map(x, SeccionDto.class)).collect(Collectors.toList()));
-    }
 }

@@ -7,6 +7,7 @@ import com.qds.backend.evaluacion.springrestqdsnotas.repository.*;
 import com.qds.backend.evaluacion.springrestqdsnotas.request.NotaRequest;
 import com.qds.backend.evaluacion.springrestqdsnotas.response.GenericoResponse;
 import com.qds.backend.evaluacion.springrestqdsnotas.service.INotaService;
+import com.qds.backend.evaluacion.springrestqdsnotas.utilitario.Util;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Service
 public class NotaServiceImpl implements INotaService {
@@ -63,7 +65,8 @@ public class NotaServiceImpl implements INotaService {
         nota.setTipoEvaluacion(iTipoEvaluacionRepository.findById(nota.getTipoEvaluacion().getId()).get());
         AlumnoSeccion alumnoSeccion = iAlumnoSeccionRepository.findById(nota.getAlumnoSeccion().getId()).get();
         nota.setAlumnoSeccion(alumnoSeccion);
-        return mapper.map(nota, NotaDto.class);
+        NotaDto notaDto = mapper.map(nota, NotaDto.class);
+        return notaDto;
     }
 
     private void validaciones(NotaRequest notaRequest) {
@@ -74,22 +77,22 @@ public class NotaServiceImpl implements INotaService {
 
     private void validacionesNegocio(NotaRequest notaRequest){
         if(notaRequest.getCalificacion() < 0 || notaRequest.getCalificacion()> 20){
-            throw new NegocioValidacionException("La calificación debe estar entre 0 y 20");
+            throw new NegocioValidacionException(Util.MENSAJE_CALIFICACION_0_20);
         }
     }
     private void validacionesExistencia(NotaRequest notaRequest)
     {
         if (!existeTipoEvaluacionPorId(notaRequest.getIdTipoEvaluacion())) {
-            throw new NegocioValidacionException("El tipo de Evaluación no existe");
+            throw new NegocioValidacionException(Util.MENSAJE_TIPO_EVALUACION_NO_EXISTE);
         }
         if (!existeAlumnoPorId(notaRequest.getIdAlumno())) {
-            throw new NegocioValidacionException("El alumno no existe");
+            throw new NegocioValidacionException(Util.MENSAJE_ALUMNO_NO_EXISTE);
         }
         if (!existeSeccionPorId(notaRequest.getIdSeccion())) {
-            throw new NegocioValidacionException("La sección no existe");
+            throw new NegocioValidacionException(Util.MENSAJE_SECCION_NO_EXISTE);
         }
         if (!existeAlumnoSeccionPorId(notaRequest.getIdSeccion(), notaRequest.getIdAlumno())) {
-            throw new NegocioValidacionException("El alumno no está inscrito en la sección");
+            throw new NegocioValidacionException(Util.MENSAJE_ALUMNO_NO_INSCRITO_SECCION);
         }
     }
 
@@ -102,7 +105,7 @@ public class NotaServiceImpl implements INotaService {
 
     private void validarNulo(Object valor, String columna){
         if(valor == null){
-            throw new NegocioValidacionException(String.format("El campo %s debe ser enviado", columna));
+            throw new NegocioValidacionException(String.format(Util.MENSAJE_CAMPO_NULO, columna));
         }
     }
 

@@ -11,5 +11,4 @@ import java.util.List;
 public interface IAlumnoSeccionService {
 
     GenericoResponse<List<AlumnoDto>> listarAlumnosPorSeccion(Integer idSeccion);
-    GenericoResponse<List<SeccionDto>> listarSeccionesPorAlumno(Integer idAlumno);
 }
