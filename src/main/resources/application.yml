@@ -1,0 +1,22 @@
+server:
+  port: 7890
+  servlet:
+    context-path: /
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: always
+    include-exception: true
+spring:
+  application:
+    name: spring-rest-qds-notas
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/universidad
+    username: root
+    password: 12345
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    show-sql: true
