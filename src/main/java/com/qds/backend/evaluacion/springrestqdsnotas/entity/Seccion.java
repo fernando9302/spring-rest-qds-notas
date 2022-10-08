@@ -35,4 +35,12 @@ public class Seccion {
     @OneToMany(mappedBy = "seccion")
     private List<AlumnoSeccion> alumnosSeccion;
 
+    public Seccion(Ciclo ciclo, Curso curso) {
+        this.ciclo = ciclo;
+        this.curso = curso;
+    }
+
+    public Seccion(Integer id) {
+        this.id = id;
+    }
 }

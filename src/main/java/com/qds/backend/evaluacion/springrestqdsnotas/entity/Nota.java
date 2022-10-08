@@ -29,13 +29,29 @@ public class Nota {
     private TipoEvaluacion tipoEvaluacion;
 
     @Column(nullable = false)
-    private Byte calificacion;
+    private Integer calificacion;
 
     @Column(nullable = false)
     private LocalDateTime fechaRegistro;
+
+    public Nota(AlumnoSeccion alumnoSeccion, TipoEvaluacion tipoEvaluacion, Integer calificacion, LocalDateTime fechaRegistro) {
+        this.alumnoSeccion = alumnoSeccion;
+        this.tipoEvaluacion = tipoEvaluacion;
+        this.calificacion = calificacion;
+        this.fechaRegistro = fechaRegistro;
+    }
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
+    public Nota(Integer id) {
+        this.id = id;
+    }
+
+    public Nota(Integer id, AlumnoSeccion alumnoSeccion, TipoEvaluacion tipoEvaluacion) {
+        this.id = id;
+        this.alumnoSeccion = alumnoSeccion;
+        this.tipoEvaluacion = tipoEvaluacion;
+    }
 }

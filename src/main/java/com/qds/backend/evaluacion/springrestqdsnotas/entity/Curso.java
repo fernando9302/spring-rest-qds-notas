@@ -31,4 +31,8 @@ public class Curso {
     public Curso(Integer id){
         this.id = id;
     }
+
+    public Curso(String descripcion) {
+        this.descripcion = descripcion;
+    }
 }

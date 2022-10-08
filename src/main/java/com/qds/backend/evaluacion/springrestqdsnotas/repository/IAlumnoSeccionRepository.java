@@ -9,9 +9,6 @@ import java.util.Optional;
 
 public interface IAlumnoSeccionRepository extends JpaRepository<AlumnoSeccion, Integer> {
 
-    Optional<AlumnoSeccion> findOneByAlumnoIdAndSeccionId(Integer idAlumno, Integer idCursoCiclo);
-
-    List<AlumnoSeccion> findAllByAlumnoId(Integer idAlumno);
-
+    Optional<AlumnoSeccion> findOneByAlumnoIdAndSeccionId(Integer idAlumno, Integer idSeccion);
     List<AlumnoSeccion> findAllBySeccionId(Integer idSeccion);
 }

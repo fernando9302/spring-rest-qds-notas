@@ -34,4 +34,9 @@ public class AlumnoSeccion {
     public AlumnoSeccion(Integer id){
         this.id = id;
     }
+
+    public AlumnoSeccion(Alumno alumno, Seccion seccion) {
+        this.alumno = alumno;
+        this.seccion = seccion;
+    }
 }

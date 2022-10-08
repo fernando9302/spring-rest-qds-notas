@@ -31,7 +31,7 @@ public class NotaController {
     @ApiOperation("Listar Notas")
     public ResponseEntity<GenericoResponse<List<NotaDto>>> listarNotas(){
         Integer idUsuario = 6;
-        return new ResponseEntity<>(iNotaService.listarTodos(idUsuario), HttpStatus.OK);
+        return new ResponseEntity<>(iNotaService.listarTodosPorAlumno(idUsuario), HttpStatus.OK);
     }
 
     @PostMapping

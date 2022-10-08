@@ -19,6 +19,6 @@ public class NotaDto {
     @ApiModelProperty(notes = "Tipo Evaluaci+on", example = "Práctica Calificada 1")
     private String tipoEvaluacion;
     @ApiModelProperty(notes = "Calificación", example = "18")
-    private Byte calificacion;
+    private Integer calificacion;
     private LocalDateTime fechaRegistro;
 }

@@ -35,4 +35,10 @@ public class Usuario {
     public Usuario(Integer id){
         this.id = id;
     }
+
+    public Usuario(String nombre, String contrasenia, Rol rol) {
+        this.nombre = nombre;
+        this.contrasenia = contrasenia;
+        this.rol = rol;
+    }
 }

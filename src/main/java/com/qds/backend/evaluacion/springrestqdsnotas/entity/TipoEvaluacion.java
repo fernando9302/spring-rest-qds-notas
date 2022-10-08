@@ -22,6 +22,10 @@ public class TipoEvaluacion {
     @Column(length = 30, nullable = false)
     private String descripcion;
 
+    public TipoEvaluacion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     public TipoEvaluacion(Integer id){
         this.id = id;
     }

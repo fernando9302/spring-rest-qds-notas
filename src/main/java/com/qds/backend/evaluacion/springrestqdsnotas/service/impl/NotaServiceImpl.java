@@ -26,10 +26,6 @@ public class NotaServiceImpl implements INotaService {
     @Autowired
     private IAlumnoRepository iAlumnoRepository;
     @Autowired
-    private ICursoRepository iCursoRepository;
-    @Autowired
-    private ICicloRepository iCicloRepository;
-    @Autowired
     private ISeccionRepository iSeccionRepository;
 
     @Autowired
@@ -39,7 +35,7 @@ public class NotaServiceImpl implements INotaService {
     private ModelMapper mapper;
 
     @Override
-    public GenericoResponse<List<NotaDto>> listarTodos(Integer idUsuario) {
+    public GenericoResponse<List<NotaDto>> listarTodosPorAlumno(Integer idUsuario) {
         Alumno alumno = iAlumnoRepository.findOneByUsuarioId(idUsuario).orElse(null);
         if(alumno == null){
             throw new NegocioValidacionException("No existe un alumno asociado al usuario");
@@ -50,15 +46,15 @@ public class NotaServiceImpl implements INotaService {
 
     @Override
     public GenericoResponse<NotaDto> crearNota(NotaRequest nota) {
-        validacionesNegocio(nota);
+        validaciones(nota);
         Nota notaCreada = new Nota();
         notaCreada.setFechaRegistro(LocalDateTime.now());
         notaCreada.setUsuario(new Usuario(nota.getIdUsuario()));
         notaCreada.setTipoEvaluacion(new TipoEvaluacion(nota.getIdTipoEvaluacion()));
         notaCreada.setAlumnoSeccion(new AlumnoSeccion(obtenerAlumnoSeccion(nota.getIdAlumno(), nota.getIdSeccion())));
         notaCreada.setCalificacion(nota.getCalificacion());
-        iNotaRepository.save(notaCreada);
-        return new GenericoResponse(buscarNotaPorId(notaCreada.getId()));
+        Nota notaGuardada = iNotaRepository.save(notaCreada);
+        return new GenericoResponse(buscarNotaPorId(notaGuardada.getId()));
     }
 
 
@@ -67,25 +63,32 @@ public class NotaServiceImpl implements INotaService {
         nota.setTipoEvaluacion(iTipoEvaluacionRepository.findById(nota.getTipoEvaluacion().getId()).get());
         AlumnoSeccion alumnoSeccion = iAlumnoSeccionRepository.findById(nota.getAlumnoSeccion().getId()).get();
         nota.setAlumnoSeccion(alumnoSeccion);
-        return mapper.map(iNotaRepository.findById(id).get(), NotaDto.class);
+        return mapper.map(nota, NotaDto.class);
     }
 
-    private void validacionesNegocio(NotaRequest nota) {
-        validacionesNulos(nota);
-        if(nota.getCalificacion() < 0 || nota.getCalificacion()> 20){
+    private void validaciones(NotaRequest notaRequest) {
+        validacionesNulos(notaRequest);
+        validacionesExistencia(notaRequest);
+        validacionesNegocio(notaRequest);
+    }
+
+    private void validacionesNegocio(NotaRequest notaRequest){
+        if(notaRequest.getCalificacion() < 0 || notaRequest.getCalificacion()> 20){
             throw new NegocioValidacionException("La calificación debe estar entre 0 y 20");
         }
-        if (!existeTipoEvaluacionPorId(nota.getIdTipoEvaluacion())) {
+    }
+    private void validacionesExistencia(NotaRequest notaRequest)
+    {
+        if (!existeTipoEvaluacionPorId(notaRequest.getIdTipoEvaluacion())) {
             throw new NegocioValidacionException("El tipo de Evaluación no existe");
         }
-        if (!existeAlumnoPorId(nota.getIdAlumno())) {
+        if (!existeAlumnoPorId(notaRequest.getIdAlumno())) {
             throw new NegocioValidacionException("El alumno no existe");
         }
-        if (!existeCicloPorId(nota.getIdSeccion())) {
+        if (!existeSeccionPorId(notaRequest.getIdSeccion())) {
             throw new NegocioValidacionException("La sección no existe");
         }
-
-        if (!existeAlumnoSeccionPorId(nota.getIdSeccion(), nota.getIdAlumno())) {
+        if (!existeAlumnoSeccionPorId(notaRequest.getIdSeccion(), notaRequest.getIdAlumno())) {
             throw new NegocioValidacionException("El alumno no está inscrito en la sección");
         }
     }
@@ -106,14 +109,11 @@ public class NotaServiceImpl implements INotaService {
     private boolean existeTipoEvaluacionPorId(Integer id){
         return iTipoEvaluacionRepository.findById(id).isPresent();
     }
-    private boolean existeCursoPorId(Integer id){
-        return iCursoRepository.findById(id).isPresent();
-    }
     private boolean existeAlumnoPorId(Integer id){
         return iAlumnoRepository.findById(id).isPresent();
     }
-    private boolean existeCicloPorId(Integer id){
-        return iCicloRepository.findById(id).isPresent();
+    private boolean existeSeccionPorId(Integer id){
+        return iSeccionRepository.findById(id).isPresent();
     }
 
     private boolean existeAlumnoSeccionPorId(Integer idSeccion, Integer idAlumno){

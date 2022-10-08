@@ -56,4 +56,13 @@ public class Alumno {
     public Alumno(Integer id){
         this.id = id;
     }
+
+    public Alumno(String nombre, String apellido, String dni, LocalDate fechaNacimiento, Usuario usuario){
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.fechaNacimiento = fechaNacimiento;
+        this.activo = true;
+        this.usuario = usuario;
+    }
 }

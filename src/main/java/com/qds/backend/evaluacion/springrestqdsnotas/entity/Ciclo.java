@@ -15,6 +15,13 @@ import java.util.List;
 @Table(name = "ciclo")
 public class Ciclo {
 
+    public Ciclo(Integer anio, String numeroCiclo, LocalDate fechaInicio, LocalDate fechaFin) {
+        this.anio = anio;
+        this.numeroCiclo = numeroCiclo;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+    }
+
     @Column
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

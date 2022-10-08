@@ -25,4 +25,8 @@ public class Rol {
 
     @OneToMany(mappedBy = "rol")
     private List<Usuario> usuarios;
+
+    public Rol(String descripcion) {
+        this.descripcion = descripcion;
+    }
 }
