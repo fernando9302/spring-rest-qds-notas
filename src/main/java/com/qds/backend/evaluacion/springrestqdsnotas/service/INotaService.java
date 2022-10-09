@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface INotaService {
 
-    GenericoResponse<List<NotaDto>> listarTodosPorAlumno(Integer idUsuario);
+    GenericoResponse<List<NotaDto>> listarTodosPorAlumno(String nombreUsuario);
     GenericoResponse<NotaDto> crearNota(NotaRequest notaRequest);
 
 }

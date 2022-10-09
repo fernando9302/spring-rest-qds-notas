@@ -35,5 +35,5 @@ public class NotaRequest {
     private Integer calificacion;
 
     @JsonIgnore
-    private Integer idUsuario;
+    private String nombreUsuario;
 }

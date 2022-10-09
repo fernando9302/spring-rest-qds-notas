@@ -37,7 +37,7 @@ public class SeccionController {
         return new ResponseEntity<>(iSeccionService.listarTodos(), HttpStatus.OK);
     }
 
-    @GetMapping("/alumnos/{id}")
+    @GetMapping("{id}/alumnos")
     @ApiOperation("Listar Alumnos por Curso")
     public ResponseEntity<GenericoResponse<List<AlumnoDto>>> listarAlumnosPorSeccion(@PathVariable("id") Integer id){
         return new ResponseEntity<>(iAlumnoSeccionService.listarAlumnosPorSeccion(id), HttpStatus.OK);

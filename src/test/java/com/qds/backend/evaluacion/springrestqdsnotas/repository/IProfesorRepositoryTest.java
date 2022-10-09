@@ -1,10 +1,8 @@
 package com.qds.backend.evaluacion.springrestqdsnotas.repository;
 
-import com.qds.backend.evaluacion.springrestqdsnotas.entity.Alumno;
+import com.qds.backend.evaluacion.springrestqdsnotas.entity.Profesor;
 import com.qds.backend.evaluacion.springrestqdsnotas.entity.Rol;
 import com.qds.backend.evaluacion.springrestqdsnotas.entity.Usuario;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -12,31 +10,30 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase
-class IAlumnoRepositoryTest {
+class IProfesorRepositoryTest {
 
     @Autowired
-    private IAlumnoRepository iAlumnoRepository;
+    private IProfesorRepository iProfesorRepository;
 
     @Autowired
     private TestEntityManager em;
 
     @Test
     void findOneByUsuarioNombre() {
-        Rol rol  = new Rol("Alumno");
+        Rol rol  = new Rol("Profesor");
         em.persistAndGetId(rol);
         Usuario usuario = new Usuario("gperez", "12345", rol);
         em.persistAndGetId(usuario);
-        Alumno alumno = new Alumno("Gabriel", "Perez", "83726333", LocalDate.of(1992, 1, 1), usuario);
-        em.persistAndGetId(alumno);
-        Optional<Alumno> alumnoEncontrado = iAlumnoRepository.findOneByUsuarioNombre(usuario.getNombre());
-        assertTrue(alumnoEncontrado.isPresent());
-        assertTrue(alumnoEncontrado.get().getId() > 0);
+        Profesor profesor = new Profesor("Gabriel", "Perez", "83726333", usuario);
+        em.persistAndGetId(profesor);
+        Optional<Profesor> profesorEncontrado = iProfesorRepository.findOneByUsuarioNombre(usuario.getNombre());
+        assertTrue(profesorEncontrado.isPresent());
+        assertTrue(profesorEncontrado.get().getId() > 0);
     }
 }

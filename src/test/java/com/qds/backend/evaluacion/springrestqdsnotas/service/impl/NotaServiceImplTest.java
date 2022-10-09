@@ -43,6 +43,12 @@ class NotaServiceImplTest {
     @MockBean
     private IAlumnoSeccionRepository iAlumnoSeccionRepository;
 
+    @MockBean
+    private IProfesorRepository iProfesorRepository;
+
+    @MockBean
+    private IUsuarioRepository iUsuarioRepository;
+
     @MockBean(name = "notaMapper")
     private ModelMapper mapper;
 
@@ -52,9 +58,10 @@ class NotaServiceImplTest {
     @BeforeEach
     private void inicio(){
         MockitoAnnotations.openMocks(this);
-        Mockito.when(iAlumnoRepository.findOneByUsuarioId(1)).thenReturn(Optional.of(new Alumno(1)));
+        Mockito.when(iAlumnoRepository.findOneByUsuarioNombre("fhuaman")).thenReturn(Optional.of(new Alumno(1)));
         Mockito.when(iNotaRepository.findAllByAlumnoSeccionAlumnoId(1)).thenReturn(Arrays.asList(new Nota(), new Nota()));
         Mockito.when(iTipoEvaluacionRepository.findById(3)).thenReturn(Optional.of(new TipoEvaluacion(3)));
+        Mockito.when(iTipoEvaluacionRepository.findById(4)).thenReturn(Optional.of(new TipoEvaluacion(4)));
         Mockito.when(iAlumnoRepository.findById(2)).thenReturn(Optional.of(new Alumno(2)));
         Mockito.when(iAlumnoRepository.findById(3)).thenReturn(Optional.of(new Alumno(3)));
         Mockito.when(iSeccionRepository.findById(1)).thenReturn(Optional.of(new Seccion(1)));
@@ -62,12 +69,14 @@ class NotaServiceImplTest {
         Mockito.when(iAlumnoSeccionRepository.findById(1)).thenReturn(Optional.of(new AlumnoSeccion(1)));
         Mockito.when(iNotaRepository.save(any())).thenReturn(new Nota(1, new AlumnoSeccion(1), new TipoEvaluacion(3) ));
         Mockito.when(iNotaRepository.findById(any())).thenReturn(Optional.of(new Nota(1, new AlumnoSeccion(1), new TipoEvaluacion(3) )));
-
+        Mockito.when(iUsuarioRepository.findByNombre("jlopez")).thenReturn(Optional.of(new Usuario(6)));
+        Mockito.when(iProfesorRepository.findOneByUsuarioNombre("jlopez")).thenReturn(Optional.of(new Profesor(1)));
+        Mockito.when(iNotaRepository.findOneByTipoEvaluacionIdAndAlumnoSeccionAlumnoIdAndAlumnoSeccionSeccionId(4,2,1)).thenReturn(Optional.of(new Nota(1)));
     }
 
     @Test
     void listarTodosPorAlumnoConUsuario() {
-        GenericoResponse<List<NotaDto>> notas = notaService.listarTodosPorAlumno(1);
+        GenericoResponse<List<NotaDto>> notas = notaService.listarTodosPorAlumno("fhuaman");
         assertNotNull(notas);
         assertNotNull(notas.getRespuesta());
         assertEquals(notas.getRespuesta().size(), 2);
@@ -75,53 +84,59 @@ class NotaServiceImplTest {
 
     @Test
     void listarTodosPorAlumnoSinUsuarioError() {
-        assertThrows(NegocioValidacionException.class, () -> {notaService.listarTodosPorAlumno(2);});
+        assertThrows(NegocioValidacionException.class, () -> {notaService.listarTodosPorAlumno("jlopez");});
     }
 
     @Test
     void crearNota(){
-        GenericoResponse<NotaDto> nota = notaService.crearNota(new NotaRequest(1,2,3, 18, 6));
+        GenericoResponse<NotaDto> nota = notaService.crearNota(new NotaRequest(1,2,3, 18, "jlopez"));
         assertNotNull(nota);
     }
 
     @Test
     void crearNotaNulos() {
         //Con Tipo Evaluacion Nulo
-        NegocioValidacionException thrownTipoEvaluacionNulo = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,2,null, 15, 6));});
+        NegocioValidacionException thrownTipoEvaluacionNulo = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,2,null, 15, "jlopez"));});
         assertEquals(thrownTipoEvaluacionNulo.getMessage(), "El campo idTipoEvaluacion debe ser enviado");
         //Con Alumno Nulo
-        NegocioValidacionException thrownAlumnoNulo =assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,null,3, 15, 6));});
+        NegocioValidacionException thrownAlumnoNulo =assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,null,3, 15, "jlopez"));});
         assertEquals(thrownAlumnoNulo.getMessage(), "El campo idAlumno debe ser enviado");
         //Con Seccion Nulo
-        NegocioValidacionException thrownSeccionNulo =assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(null,2,3, 15, 6));});
+        NegocioValidacionException thrownSeccionNulo =assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(null,2,3, 15, "jlopez"));});
         assertEquals(thrownSeccionNulo.getMessage(), "El campo idSeccion debe ser enviado");
         //Con Calificacion Nulo
-        NegocioValidacionException thrownCalificacionNulo =assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,2,3, null, 6));});
+        NegocioValidacionException thrownCalificacionNulo =assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,2,3, null, "jlopez"));});
         assertEquals(thrownCalificacionNulo.getMessage(), "El campo calificacion debe ser enviado");
     }
 
     @Test
     void crearNotasSinExistencias(){
-        NegocioValidacionException thrownTipoEvaluacionNoExiste = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,2,100, 15, 6));});
+        NegocioValidacionException thrownTipoEvaluacionNoExiste = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,2,100, 15, "jlopez"));});
         assertEquals(thrownTipoEvaluacionNoExiste.getMessage(), "El tipo de Evaluación no existe");
 
-        NegocioValidacionException thrownAlumnoNoExiste = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,200,3, 15, 6));});
+        NegocioValidacionException thrownAlumnoNoExiste = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,200,3, 15, "jlopez"));});
         assertEquals(thrownAlumnoNoExiste.getMessage(), "El alumno no existe");
 
-        NegocioValidacionException thrownSeccionNoExiste = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(600,2,3, 15, 6));});
+        NegocioValidacionException thrownSeccionNoExiste = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(600,2,3, 15, "jlopez"));});
         assertEquals(thrownSeccionNoExiste.getMessage(), "La sección no existe");
 
-        NegocioValidacionException thrownCalificacionNoExiste = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,3,3, 15, 6));});
+        NegocioValidacionException thrownCalificacionNoExiste = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,3,3, 15, "jlopez"));});
         assertEquals(thrownCalificacionNoExiste.getMessage(), "El alumno no está inscrito en la sección");
     }
 
     @Test
-    void crearNotasValidacionCalificacion(){
-        NegocioValidacionException thrownCalificacionMenorCero = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,2,3, -1, 6));});
+    void crearNotasValidacionNegocio(){
+        NegocioValidacionException thrownCalificacionMenorCero = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,2,3, -1, "jlopez"));});
         assertEquals(thrownCalificacionMenorCero.getMessage(), "La calificación debe estar entre 0 y 20");
 
-        NegocioValidacionException thrownCalificacionMayorVeinte = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,2,3, 21, 6));});
+        NegocioValidacionException thrownCalificacionMayorVeinte = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,2,3, 21, "jlopez"));});
         assertEquals(thrownCalificacionMayorVeinte.getMessage(), "La calificación debe estar entre 0 y 20");
+
+        NegocioValidacionException thrownNoEsProfesor = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,2,3, 15, "fhuaman"));});
+        assertEquals(thrownNoEsProfesor.getMessage(), "Solo los profesores pueden registrar notas");
+
+        NegocioValidacionException thrownNotaRegistrada = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,2,4, 15, "jlopez"));});
+        assertEquals(thrownNotaRegistrada.getMessage(), "La nota ya fue registrada");
     }
 
 }

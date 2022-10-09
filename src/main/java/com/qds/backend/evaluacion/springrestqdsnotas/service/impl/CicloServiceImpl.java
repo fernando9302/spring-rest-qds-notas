@@ -8,6 +8,8 @@ import com.qds.backend.evaluacion.springrestqdsnotas.service.ICicloService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -25,6 +27,9 @@ public class CicloServiceImpl implements ICicloService {
 
     @Override
     public GenericoResponse<List<CicloDto>> listarTodos() {
+
+
+        
         return new GenericoResponse(iCicloRepository.findAll().stream().map(x-> mapper.map(x, CicloDto.class)).collect(Collectors.toList()));
     }
 

@@ -6,6 +6,7 @@ import com.qds.backend.evaluacion.springrestqdsnotas.exception.NegocioValidacion
 import com.qds.backend.evaluacion.springrestqdsnotas.repository.*;
 import com.qds.backend.evaluacion.springrestqdsnotas.request.NotaRequest;
 import com.qds.backend.evaluacion.springrestqdsnotas.response.GenericoResponse;
+import com.qds.backend.evaluacion.springrestqdsnotas.security.util.JwtTokenUtil;
 import com.qds.backend.evaluacion.springrestqdsnotas.service.INotaService;
 import com.qds.backend.evaluacion.springrestqdsnotas.utilitario.Util;
 import org.modelmapper.ModelMapper;
@@ -29,18 +30,26 @@ public class NotaServiceImpl implements INotaService {
     private IAlumnoRepository iAlumnoRepository;
     @Autowired
     private ISeccionRepository iSeccionRepository;
-
     @Autowired
     private IAlumnoSeccionRepository iAlumnoSeccionRepository;
+
+    @Autowired
+    private IProfesorRepository iProfesorRepository;
+
+    @Autowired
+    private IUsuarioRepository iUsuarioRepository;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
     @Autowired
     @Qualifier("notaMapper")
     private ModelMapper mapper;
 
     @Override
-    public GenericoResponse<List<NotaDto>> listarTodosPorAlumno(Integer idUsuario) {
-        Alumno alumno = iAlumnoRepository.findOneByUsuarioId(idUsuario).orElse(null);
+    public GenericoResponse<List<NotaDto>> listarTodosPorAlumno(String nombreUsuario) {
+        Alumno alumno = iAlumnoRepository.findOneByUsuarioNombre(nombreUsuario).orElse(null);
         if(alumno == null){
-            throw new NegocioValidacionException("No existe un alumno asociado al usuario");
+            throw new NegocioValidacionException(Util.MENSAJE_ALUMNO_NO_ASOCIADO);
         }
         return new GenericoResponse(iNotaRepository.findAllByAlumnoSeccionAlumnoId(alumno.getId()).stream().map(x-> mapper.map(x, NotaDto.class)).collect(Collectors.toList()));
     }
@@ -51,7 +60,7 @@ public class NotaServiceImpl implements INotaService {
         validaciones(nota);
         Nota notaCreada = new Nota();
         notaCreada.setFechaRegistro(LocalDateTime.now());
-        notaCreada.setUsuario(new Usuario(nota.getIdUsuario()));
+        notaCreada.setUsuario(obtenerUsuario(nota.getNombreUsuario()));
         notaCreada.setTipoEvaluacion(new TipoEvaluacion(nota.getIdTipoEvaluacion()));
         notaCreada.setAlumnoSeccion(new AlumnoSeccion(obtenerAlumnoSeccion(nota.getIdAlumno(), nota.getIdSeccion())));
         notaCreada.setCalificacion(nota.getCalificacion());
@@ -59,6 +68,14 @@ public class NotaServiceImpl implements INotaService {
         return new GenericoResponse(buscarNotaPorId(notaGuardada.getId()));
     }
 
+    private Usuario obtenerUsuario(String nombreUsuario){
+        Usuario usuario = iUsuarioRepository.findByNombre(nombreUsuario).orElse(null);
+        if(usuario == null){
+            throw new NegocioValidacionException(Util.MENSAJE_USUARIO_NO_EXISTE);
+        }else {
+            return usuario;
+        }
+    }
 
     private NotaDto buscarNotaPorId(Integer id) {
         Nota nota = iNotaRepository.findById(id).get();
@@ -78,6 +95,16 @@ public class NotaServiceImpl implements INotaService {
     private void validacionesNegocio(NotaRequest notaRequest){
         if(notaRequest.getCalificacion() < 0 || notaRequest.getCalificacion()> 20){
             throw new NegocioValidacionException(Util.MENSAJE_CALIFICACION_0_20);
+        }
+
+        Profesor profesor = iProfesorRepository.findOneByUsuarioNombre(notaRequest.getNombreUsuario()).orElse(null);
+        if(profesor == null){
+            throw new NegocioValidacionException(Util.MENSAJE_SOLO_PROFESORES);
+        }
+
+        Nota nota = iNotaRepository.findOneByTipoEvaluacionIdAndAlumnoSeccionAlumnoIdAndAlumnoSeccionSeccionId(notaRequest.getIdTipoEvaluacion(), notaRequest.getIdAlumno(),notaRequest.getIdSeccion()).orElse(null);
+        if(nota != null){
+            throw new NegocioValidacionException(Util.MENSAJE_NOTA_YA_REGISTRADA);
         }
     }
     private void validacionesExistencia(NotaRequest notaRequest)

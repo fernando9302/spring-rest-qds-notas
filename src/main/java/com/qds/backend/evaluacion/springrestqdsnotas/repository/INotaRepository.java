@@ -11,4 +11,6 @@ public interface INotaRepository extends JpaRepository<Nota, Integer> {
 
     List<Nota> findAllByAlumnoSeccionAlumnoId(Integer idAlumno);
 
+    Optional<Nota>  findOneByTipoEvaluacionIdAndAlumnoSeccionAlumnoIdAndAlumnoSeccionSeccionId(Integer idTipoEvaluacion, Integer idAlumno, Integer idSeccion);
+
 }

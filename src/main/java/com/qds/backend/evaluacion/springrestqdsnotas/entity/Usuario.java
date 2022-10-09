@@ -22,7 +22,7 @@ public class Usuario {
     @Column(length = 50, nullable = false)
     private String nombre;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 1000, nullable = false)
     private String contrasenia;
 
     @OneToOne(mappedBy = "usuario")

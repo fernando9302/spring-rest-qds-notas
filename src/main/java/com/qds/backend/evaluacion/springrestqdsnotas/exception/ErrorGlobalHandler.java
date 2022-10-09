@@ -3,6 +3,7 @@ package com.qds.backend.evaluacion.springrestqdsnotas.exception;
 import com.qds.backend.evaluacion.springrestqdsnotas.response.GenericoResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -27,4 +28,12 @@ public class ErrorGlobalHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<GenericoResponse> handleUsuarioNoEncontrado(UsernameNotFoundException ex, WebRequest req){
+        GenericoResponse res = new GenericoResponse();
+        res.getErrores().add(ex.getMessage());
+        res.setFecha(LocalDateTime.now());
+        res.setProcesado(false);
+        return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+    }
 }

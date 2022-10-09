@@ -34,7 +34,7 @@ public class CicloController {
         return new ResponseEntity<>(iCicloService.listarTodos(), HttpStatus.OK);
     }
 
-    @GetMapping("/cursos/{id}")
+    @GetMapping("/{id}/cursos")
     @ApiOperation("Listar Cursos por Ciclo")
     public ResponseEntity<GenericoResponse<List<CursoDto>>> listarCursosPorCiclo(@PathVariable("id") Integer id){
         return new ResponseEntity<>(iSeccionService.listarCursosPorCiclo(id), HttpStatus.OK);

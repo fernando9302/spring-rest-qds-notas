@@ -38,4 +38,19 @@ class INotaRepositoryTest {
         em.persist(nota2);
         assertEquals(iNotaRepository.findAllByAlumnoSeccionAlumnoId(alumno.getId()).size(), 2);
     }
+
+    @Test
+    void findOneByTipoEvaluacionIdAndAlumnoSeccionAlumnoIdAndAlumnoSeccionSeccionId(){
+        Alumno alumno = new Alumno("Gabriel", "Perez", "83726333", LocalDate.of(1992, 1, 1), null);
+        em.persistAndGetId(alumno);
+        Seccion seccion = new Seccion();
+        em.persistAndGetId(seccion);
+        AlumnoSeccion alumnoSeccion = new AlumnoSeccion(alumno, seccion);
+        em.persistAndGetId(alumnoSeccion);
+        TipoEvaluacion tipoEvaluacion = new TipoEvaluacion("Practica Calificada 1");
+        em.persist(tipoEvaluacion);
+        Nota nota = new Nota(alumnoSeccion, tipoEvaluacion, 15, LocalDateTime.now());
+        em.persist(nota);
+        assertNotNull(iNotaRepository.findOneByTipoEvaluacionIdAndAlumnoSeccionAlumnoIdAndAlumnoSeccionSeccionId(tipoEvaluacion.getId(), alumno.getId(), seccion.getId()));
+    }
 }

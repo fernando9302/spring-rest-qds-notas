@@ -21,7 +21,7 @@ public class Nota {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_seccion")
+    @JoinColumn(name = "id_alumno_seccion")
     private AlumnoSeccion alumnoSeccion;
 
     @ManyToOne(fetch = FetchType.EAGER)

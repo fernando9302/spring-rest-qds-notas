@@ -33,7 +33,7 @@ public class CursoController {
         return new ResponseEntity<>(iCursoService.listarTodos(), HttpStatus.OK);
     }
 
-    @GetMapping("/ciclos/{id}")
+    @GetMapping("{id}/ciclos")
     @ApiOperation("Listar Ciclos por Curso")
     public ResponseEntity<GenericoResponse<List<CicloDto>>> listarCursosPorCiclo(@PathVariable("id") Integer id){
         return new ResponseEntity<>(iSeccionService.listarCiclosPorCurso(id), HttpStatus.OK);

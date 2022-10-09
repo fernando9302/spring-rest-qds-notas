@@ -1,37 +1,43 @@
 package com.qds.backend.evaluacion.springrestqdsnotas.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qds.backend.evaluacion.springrestqdsnotas.dto.NotaDto;
 import com.qds.backend.evaluacion.springrestqdsnotas.request.NotaRequest;
 import com.qds.backend.evaluacion.springrestqdsnotas.response.GenericoResponse;
+import com.qds.backend.evaluacion.springrestqdsnotas.security.entryPoint.JwtAuthenticationEntryPoint;
+import com.qds.backend.evaluacion.springrestqdsnotas.security.filter.JwtRequestFilter;
+import com.qds.backend.evaluacion.springrestqdsnotas.security.service.JwtUserDetailsService;
+import com.qds.backend.evaluacion.springrestqdsnotas.security.util.JwtTokenUtil;
 import com.qds.backend.evaluacion.springrestqdsnotas.service.INotaService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.internal.matchers.Null;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 
-import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(NotaController.class)
+
+@SpringBootTest
+@AutoConfigureMockMvc
 class NotaControllerTest {
-
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -40,6 +46,7 @@ class NotaControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
 
 
     @BeforeEach
@@ -51,13 +58,18 @@ class NotaControllerTest {
         Mockito.when(notaService.listarTodosPorAlumno(any())).thenReturn(respuestaListado);
 
         Mockito.when(notaService.crearNota(any())).thenReturn(respuestaListado);
+
+
     }
 
     @Test
     void listarNotas() throws Exception {
+
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/notas")
-                        .content(MediaType.APPLICATION_JSON_VALUE))
+                        .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJycm9kcmlndWV6IiwiZXhwIjoxNjY1MzIwMTQ2LCJpYXQiOjE2NjUzMDIxNDZ9.PLscaXZnTrWIMtlvOu5XGwt8CvWhN1h2SyuqUcvCnAYoUS2r04m1-ps2u1y_or1tDWfkvbQPd2pqC6wbkcxQqA")
+                        .content(MediaType.APPLICATION_JSON_VALUE)
+                )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.notNullValue()))
                 .andExpect(jsonPath("$.respuesta", hasSize(2)));
@@ -69,7 +81,8 @@ class NotaControllerTest {
         MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/notas")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(notaRequest));
+                .content(objectMapper.writeValueAsString(notaRequest))
+                .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJycm9kcmlndWV6IiwiZXhwIjoxNjY1MzIwMTQ2LCJpYXQiOjE2NjUzMDIxNDZ9.PLscaXZnTrWIMtlvOu5XGwt8CvWhN1h2SyuqUcvCnAYoUS2r04m1-ps2u1y_or1tDWfkvbQPd2pqC6wbkcxQqA");
 
         mockMvc.perform(mockRequest)
                 .andExpect(status().isCreated())

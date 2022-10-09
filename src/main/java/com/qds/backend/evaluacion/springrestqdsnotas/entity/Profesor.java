@@ -3,6 +3,7 @@ package com.qds.backend.evaluacion.springrestqdsnotas.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -42,4 +43,15 @@ public class Profesor {
     @OneToMany(mappedBy = "profesor")
     private List<Seccion> seccion;
 
+    public Profesor(String nombre, String apellido, String dni, Usuario usuario){
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.activo = true;
+        this.usuario = usuario;
+    }
+
+    public Profesor(Integer id) {
+        this.id = id;
+    }
 }

@@ -2,6 +2,7 @@ package com.qds.backend.evaluacion.springrestqdsnotas.service.impl;
 
 import com.qds.backend.evaluacion.springrestqdsnotas.dto.NotaDto;
 import com.qds.backend.evaluacion.springrestqdsnotas.dto.UsuarioDto;
+import com.qds.backend.evaluacion.springrestqdsnotas.entity.Usuario;
 import com.qds.backend.evaluacion.springrestqdsnotas.repository.IUsuarioRepository;
 import com.qds.backend.evaluacion.springrestqdsnotas.response.GenericoResponse;
 import com.qds.backend.evaluacion.springrestqdsnotas.service.IUsuarioService;
@@ -25,6 +26,12 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     public GenericoResponse<List<UsuarioDto>> listarTodos() {
         return new GenericoResponse(iUsuarioRepository.findAll().stream().map(x-> mapper.map(x, UsuarioDto.class)).collect(Collectors.toList()));
+    }
+
+    @Override
+    public GenericoResponse<UsuarioDto> actualizarUsuario(Usuario usuario) {
+        Usuario usuarioCreado = iUsuarioRepository.save(usuario);
+        return new GenericoResponse<>(mapper.map(usuarioCreado, UsuarioDto.class));
     }
 
 }
