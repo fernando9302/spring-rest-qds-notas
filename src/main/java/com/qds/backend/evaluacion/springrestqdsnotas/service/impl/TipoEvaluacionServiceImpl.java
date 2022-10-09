@@ -1,9 +1,6 @@
 package com.qds.backend.evaluacion.springrestqdsnotas.service.impl;
 
-import com.qds.backend.evaluacion.springrestqdsnotas.dto.NotaDto;
-import com.qds.backend.evaluacion.springrestqdsnotas.dto.RolDto;
 import com.qds.backend.evaluacion.springrestqdsnotas.dto.TipoEvaluacionDto;
-import com.qds.backend.evaluacion.springrestqdsnotas.repository.IRolRepository;
 import com.qds.backend.evaluacion.springrestqdsnotas.repository.ITipoEvaluacionRepository;
 import com.qds.backend.evaluacion.springrestqdsnotas.response.GenericoResponse;
 import com.qds.backend.evaluacion.springrestqdsnotas.service.ITipoEvaluacionService;

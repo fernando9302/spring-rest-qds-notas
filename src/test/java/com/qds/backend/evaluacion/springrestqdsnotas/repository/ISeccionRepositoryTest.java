@@ -52,4 +52,23 @@ class ISeccionRepositoryTest {
         em.persist(seccion2);
         assertEquals(iSeccionRepository.findAllByCursoId(curso.getId()).size(), 2);
     }
+
+    @Test
+    void findOneByIdAndProfesorUsuarioNombre(){
+        Curso curso = new Curso("Programación");
+        em.persistAndGetId(curso);
+        Ciclo ciclo = new Ciclo(2022, "I", LocalDate.of(2022,1,1), LocalDate.of(2022,4,1));
+        em.persistAndGetId(ciclo);
+        Rol rol = new Rol("Profesor");
+        em.persistAndGetId(rol);
+        Usuario usuario = new Usuario("rmarquez", "1212", rol);
+        em.persistAndGetId(usuario);
+        Profesor profesor = new Profesor("Roberto", "Marquez", "11111111", usuario);
+        em.persistAndGetId(profesor);
+        Seccion seccion = new Seccion(ciclo, curso, profesor);
+        em.persist(seccion);
+        Optional<Seccion> profesorEnSeccion = iSeccionRepository.findOneByIdAndProfesorUsuarioNombre(seccion.getId(), usuario.getNombre());
+        assertTrue(profesorEnSeccion.isPresent());
+        assertTrue(profesorEnSeccion.get().getId() > 0);
+    }
 }

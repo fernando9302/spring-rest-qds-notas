@@ -6,7 +6,6 @@ import com.qds.backend.evaluacion.springrestqdsnotas.security.service.JwtUserDet
 import com.qds.backend.evaluacion.springrestqdsnotas.security.util.JwtTokenUtil;
 import com.qds.backend.evaluacion.springrestqdsnotas.utilitario.Util;
 import io.swagger.annotations.*;
-import org.apache.tomcat.util.http.HeaderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

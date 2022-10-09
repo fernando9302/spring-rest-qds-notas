@@ -19,7 +19,7 @@ import java.util.List;
 
 @Api(tags = "Ciclos", description = "Servicio para administrar ciclos")
 @RestController
-@RequestMapping("/ciclos")
+@RequestMapping("/v1/ciclos")
 public class CicloController {
 
     @Autowired

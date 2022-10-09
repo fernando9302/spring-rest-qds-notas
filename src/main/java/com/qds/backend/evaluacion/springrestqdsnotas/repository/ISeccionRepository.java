@@ -11,4 +11,6 @@ public interface ISeccionRepository extends JpaRepository<Seccion, Integer> {
     List<Seccion> findAllByCicloId(Integer idCiclo);
 
     List<Seccion> findAllByCursoId(Integer idCurso);
+
+    Optional<Seccion> findOneByIdAndProfesorUsuarioNombre(Integer id, String nombreUsuario);
 }

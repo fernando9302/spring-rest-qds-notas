@@ -12,6 +12,7 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "curso")
+@ToString(onlyExplicitlyIncluded = true)
 public class Curso {
     @Column
     @Id
@@ -22,9 +23,11 @@ public class Curso {
     @Column(length = 50, nullable = false)
     private String descripcion;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "curso")
     private List<ProfesorCurso> profesorCurso;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "curso")
     private List<Seccion> seccion;
 

@@ -14,13 +14,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:7890/notas",
+							"raw": "http://localhost:7890/v1/notas",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "7890",
 							"path": [
+								"v1",
 								"notas"
 							]
 						}
@@ -34,7 +35,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"calificacion\": 16,\r\n    \"idSeccion\": 1,\r\n    \"idAlumno\": 3,\r\n    \"idTipoEvaluacion\" : 3\r\n}",
+							"raw": "{\r\n    \"calificacion\": 16,\r\n    \"idSeccion\": 2,\r\n    \"idAlumno\": 5,\r\n    \"idTipoEvaluacion\" : 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -42,13 +43,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:7890/notas",
+							"raw": "http://localhost:7890/v1/notas",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "7890",
 							"path": [
+								"v1",
 								"notas"
 							]
 						}
@@ -114,13 +116,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:7890/alumnos",
+							"raw": "http://localhost:7890/v1/alumnos",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "7890",
 							"path": [
+								"v1",
 								"alumnos"
 							]
 						}
@@ -138,13 +141,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:7890/ciclos",
+							"raw": "http://localhost:7890/v1/ciclos",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "7890",
 							"path": [
+								"v1",
 								"ciclos"
 							]
 						}
@@ -157,13 +161,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:7890/ciclos/1/cursos",
+							"raw": "http://localhost:7890/v1/ciclos/1/cursos",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "7890",
 							"path": [
+								"v1",
 								"ciclos",
 								"1",
 								"cursos"
@@ -183,13 +188,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:7890/cursos",
+							"raw": "http://localhost:7890/v1/cursos",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "7890",
 							"path": [
+								"v1",
 								"cursos"
 							]
 						}
@@ -202,13 +208,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:7890/ciclos/1/cursos",
+							"raw": "http://localhost:7890/v1/ciclos/1/cursos",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "7890",
 							"path": [
+								"v1",
 								"ciclos",
 								"1",
 								"cursos"
@@ -228,13 +235,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:7890/profesores",
+							"raw": "http://localhost:7890/v1/profesores",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "7890",
 							"path": [
+								"v1",
 								"profesores"
 							]
 						}
@@ -252,13 +260,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:7890/secciones",
+							"raw": "http://localhost:7890/v1/secciones",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "7890",
 							"path": [
+								"v1",
 								"secciones"
 							]
 						}
@@ -271,13 +280,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:7890/secciones/1/alumnos",
+							"raw": "http://localhost:7890/v1/secciones/1/alumnos",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "7890",
 							"path": [
+								"v1",
 								"secciones",
 								"1",
 								"alumnos"
@@ -297,13 +307,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:7890/tiposEvaluacion",
+							"raw": "http://localhost:7890/v1/tiposEvaluacion",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "7890",
 							"path": [
+								"v1",
 								"tiposEvaluacion"
 							]
 						}
@@ -321,13 +332,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:7890/usuarios",
+							"raw": "http://localhost:7890/v1/usuarios",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "7890",
 							"path": [
+								"v1",
 								"usuarios"
 							]
 						}
@@ -342,7 +354,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJycm9kcmlndWV6IiwiZXhwIjoxNjY1MzI1NTM4LCJpYXQiOjE2NjUzMDc1Mzh9.FQKRtQxSwBYxD_14U9kvafFs6pMfH40QRRZr13-HJwLahWFcHp-iZcK6sgSlYWUG_koCdgPK9hcfewUj5LGEww",
+				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjcmFtaXJleiIsImV4cCI6MTY2NTM3MDQ3NSwiaWF0IjoxNjY1MzUyNDc1fQ.5O4e4OhU-bLGadALA2RIr8UPrAJS9DGAxcTeCo7VDrlSJsvBUClnNb_aGy7KPgmb9uyl1FpAL-ETgGf5gLJe-Q",
 				"type": "string"
 			}
 		]

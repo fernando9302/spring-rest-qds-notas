@@ -11,6 +11,7 @@ import javax.persistence.*;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "profesor_curso")
+@ToString
 public class ProfesorCurso {
 
     @Column

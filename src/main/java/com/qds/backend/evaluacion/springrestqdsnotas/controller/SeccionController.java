@@ -1,7 +1,6 @@
 package com.qds.backend.evaluacion.springrestqdsnotas.controller;
 
 import com.qds.backend.evaluacion.springrestqdsnotas.dto.AlumnoDto;
-import com.qds.backend.evaluacion.springrestqdsnotas.dto.CicloDto;
 import com.qds.backend.evaluacion.springrestqdsnotas.dto.SeccionDto;
 import com.qds.backend.evaluacion.springrestqdsnotas.response.GenericoResponse;
 import com.qds.backend.evaluacion.springrestqdsnotas.service.IAlumnoSeccionService;
@@ -20,7 +19,7 @@ import java.util.List;
 
 @Api(tags = "Secciones", description = "Servicio para administrar secciones")
 @RestController
-@RequestMapping("/secciones")
+@RequestMapping("/v1/secciones")
 public class SeccionController {
 
     @Autowired

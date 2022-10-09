@@ -2,7 +2,6 @@ package com.qds.backend.evaluacion.springrestqdsnotas.service.impl;
 
 import com.qds.backend.evaluacion.springrestqdsnotas.dto.CicloDto;
 import com.qds.backend.evaluacion.springrestqdsnotas.dto.CursoDto;
-import com.qds.backend.evaluacion.springrestqdsnotas.dto.NotaDto;
 import com.qds.backend.evaluacion.springrestqdsnotas.dto.SeccionDto;
 import com.qds.backend.evaluacion.springrestqdsnotas.repository.ISeccionRepository;
 import com.qds.backend.evaluacion.springrestqdsnotas.response.GenericoResponse;

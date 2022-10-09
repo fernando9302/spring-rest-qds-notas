@@ -12,6 +12,7 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "rol")
+@ToString(onlyExplicitlyIncluded = true)
 public class Rol {
 
     @Column
@@ -23,6 +24,7 @@ public class Rol {
     @Column(length = 30, nullable = false)
     private String descripcion;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "rol")
     private List<Usuario> usuarios;
 

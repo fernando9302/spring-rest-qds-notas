@@ -1,20 +1,16 @@
 package com.qds.backend.evaluacion.springrestqdsnotas.exception;
 
 import com.qds.backend.evaluacion.springrestqdsnotas.response.GenericoResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.validation.ConstraintViolationException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @ControllerAdvice
 public class ErrorGlobalHandler extends ResponseEntityExceptionHandler {

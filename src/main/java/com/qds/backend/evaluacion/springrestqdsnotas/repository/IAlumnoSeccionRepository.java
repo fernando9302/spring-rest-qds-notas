@@ -1,7 +1,6 @@
 package com.qds.backend.evaluacion.springrestqdsnotas.repository;
 
 import com.qds.backend.evaluacion.springrestqdsnotas.entity.AlumnoSeccion;
-import com.qds.backend.evaluacion.springrestqdsnotas.entity.Seccion;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

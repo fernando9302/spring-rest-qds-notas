@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "nota")
+@ToString
 public class Nota {
 
     @Column

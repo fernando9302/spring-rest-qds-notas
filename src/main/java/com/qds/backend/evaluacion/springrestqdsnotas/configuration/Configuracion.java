@@ -6,13 +6,8 @@ import com.qds.backend.evaluacion.springrestqdsnotas.entity.Seccion;
 import com.qds.backend.evaluacion.springrestqdsnotas.entity.Nota;
 import com.qds.backend.evaluacion.springrestqdsnotas.entity.Usuario;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.function.Function;
 
 @Configuration
 public class Configuracion {
@@ -20,10 +15,10 @@ public class Configuracion {
     @Bean(name = "usuarioMapper")
     public ModelMapper usuarioMapper(){
         ModelMapper modelMapper = new ModelMapper();
-        modelMapper.typeMap(Usuario.class, UsuarioDto.class).addMappings(mapper -> {
+        modelMapper.typeMap(Usuario.class, UsuarioDto.class).addMappings(mapper ->
             mapper.map(origen -> origen.getNombre(),
-                    UsuarioDto::setUsuario);
-        });
+                    UsuarioDto::setUsuario)
+        );
         return modelMapper;
     }
 
@@ -77,10 +72,12 @@ public class Configuracion {
     public ModelMapper seccionMapper(){
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.typeMap(Seccion.class, SeccionDto.class).addMappings(mapper -> {
-            mapper.map(origen -> origen.getCiclo().getDescripcionCompleta(),
+            mapper.map(origen -> origen.getCiclo(),
                     SeccionDto::setCiclo);
-            mapper.map(origen -> origen.getCurso().getDescripcion(),
+            mapper.map(origen -> origen.getCurso(),
                     SeccionDto::setCurso);
+            mapper.map(origen -> origen.getProfesor(),
+                    SeccionDto::setProfesor);
 
         });
         return modelMapper;

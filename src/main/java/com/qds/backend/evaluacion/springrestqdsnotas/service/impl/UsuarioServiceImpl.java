@@ -1,6 +1,6 @@
 package com.qds.backend.evaluacion.springrestqdsnotas.service.impl;
 
-import com.qds.backend.evaluacion.springrestqdsnotas.dto.NotaDto;
+
 import com.qds.backend.evaluacion.springrestqdsnotas.dto.UsuarioDto;
 import com.qds.backend.evaluacion.springrestqdsnotas.entity.Usuario;
 import com.qds.backend.evaluacion.springrestqdsnotas.repository.IUsuarioRepository;

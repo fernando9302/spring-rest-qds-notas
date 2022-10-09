@@ -12,6 +12,7 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "alumno_seccion")
+@ToString
 public class AlumnoSeccion {
 
     @Column
@@ -28,6 +29,7 @@ public class AlumnoSeccion {
     @JoinColumn(name = "id_seccion")
     private Seccion seccion;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "alumnoSeccion")
     private List<Nota> notas;
 

@@ -17,6 +17,8 @@ public final class Util {
     public static final String MENSAJE_SOLO_PROFESORES = "Solo los profesores pueden registrar notas";
     public static final String MENSAJE_NOTA_YA_REGISTRADA = "La nota ya fue registrada";
 
+    public static final String MENSAJE_PROFESOR_NO_ENSENIA_SECCION = "El profesor no es el responsable de la sección";
+
 
     public static final String obtenerUsuarioActual(Authentication authentication){
         User usuario = (User) authentication.getPrincipal();

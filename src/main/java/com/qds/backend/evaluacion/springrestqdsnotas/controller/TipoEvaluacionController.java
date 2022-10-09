@@ -1,9 +1,7 @@
 package com.qds.backend.evaluacion.springrestqdsnotas.controller;
 
-import com.qds.backend.evaluacion.springrestqdsnotas.dto.AlumnoDto;
 import com.qds.backend.evaluacion.springrestqdsnotas.dto.TipoEvaluacionDto;
 import com.qds.backend.evaluacion.springrestqdsnotas.response.GenericoResponse;
-import com.qds.backend.evaluacion.springrestqdsnotas.service.IAlumnoService;
 import com.qds.backend.evaluacion.springrestqdsnotas.service.ITipoEvaluacionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,7 +16,7 @@ import java.util.List;
 
 @Api(tags = "Tipo Evaluación", description = "Servicio para administrar tipos de evaludación")
 @RestController
-@RequestMapping("/tiposEvaluacion")
+@RequestMapping("/v1/tiposEvaluacion")
 public class TipoEvaluacionController {
 
     @Autowired

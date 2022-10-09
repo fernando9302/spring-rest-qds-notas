@@ -9,6 +9,7 @@ import com.qds.backend.evaluacion.springrestqdsnotas.response.GenericoResponse;
 import com.qds.backend.evaluacion.springrestqdsnotas.security.util.JwtTokenUtil;
 import com.qds.backend.evaluacion.springrestqdsnotas.service.INotaService;
 import com.qds.backend.evaluacion.springrestqdsnotas.utilitario.Util;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,9 +17,11 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
+@Slf4j
 @Service
 public class NotaServiceImpl implements INotaService {
 
@@ -56,16 +59,18 @@ public class NotaServiceImpl implements INotaService {
 
 
     @Override
-    public GenericoResponse<NotaDto> crearNota(NotaRequest nota) {
-        validaciones(nota);
+    public GenericoResponse<NotaDto> crearNota(NotaRequest notaRequest) {
+        validaciones(notaRequest);
         Nota notaCreada = new Nota();
         notaCreada.setFechaRegistro(LocalDateTime.now());
-        notaCreada.setUsuario(obtenerUsuario(nota.getNombreUsuario()));
-        notaCreada.setTipoEvaluacion(new TipoEvaluacion(nota.getIdTipoEvaluacion()));
-        notaCreada.setAlumnoSeccion(new AlumnoSeccion(obtenerAlumnoSeccion(nota.getIdAlumno(), nota.getIdSeccion())));
-        notaCreada.setCalificacion(nota.getCalificacion());
+        notaCreada.setUsuario(obtenerUsuario(notaRequest.getNombreUsuario()));
+        notaCreada.setTipoEvaluacion(new TipoEvaluacion(notaRequest.getIdTipoEvaluacion()));
+        notaCreada.setAlumnoSeccion(new AlumnoSeccion(obtenerAlumnoSeccion(notaRequest.getIdAlumno(), notaRequest.getIdSeccion())));
+        notaCreada.setCalificacion(notaRequest.getCalificacion());
         Nota notaGuardada = iNotaRepository.save(notaCreada);
-        return new GenericoResponse(buscarNotaPorId(notaGuardada.getId()));
+        NotaDto notaResponse = buscarNotaPorId(notaGuardada.getId());
+        log.info(String.format("Se registró la nota con id %s. Nota Request: %s. Nota Response: %s", notaGuardada.getId(), notaRequest, notaResponse));
+        return new GenericoResponse(notaResponse);
     }
 
     private Usuario obtenerUsuario(String nombreUsuario){
@@ -121,6 +126,14 @@ public class NotaServiceImpl implements INotaService {
         if (!existeAlumnoSeccionPorId(notaRequest.getIdSeccion(), notaRequest.getIdAlumno())) {
             throw new NegocioValidacionException(Util.MENSAJE_ALUMNO_NO_INSCRITO_SECCION);
         }
+        if(!existeProfesorEnSeccion(notaRequest.getIdSeccion(), notaRequest.getNombreUsuario())){
+            throw new NegocioValidacionException(Util.MENSAJE_PROFESOR_NO_ENSENIA_SECCION);
+        }
+    }
+
+    private boolean existeProfesorEnSeccion(Integer idSeccion, String nombreUsuario) {
+       return iSeccionRepository.findOneByIdAndProfesorUsuarioNombre(idSeccion, nombreUsuario).isPresent();
+
     }
 
     private void validacionesNulos(NotaRequest notaRequest){

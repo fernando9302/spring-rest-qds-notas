@@ -3,8 +3,6 @@ package com.qds.backend.evaluacion.springrestqdsnotas.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -14,12 +12,18 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "profesor")
+@ToString(onlyExplicitlyIncluded = true)
 public class Profesor {
     @Column
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Integer id;
+
+    @Transient
+    public String getNombreCompleto(){
+        return String.format("%s %s", nombre, apellido);
+    }
 
     @Column(length = 80, nullable = false)
     private String nombre;
@@ -37,9 +41,11 @@ public class Profesor {
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "profesor")
     private List<ProfesorCurso> profesorCurso;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "profesor")
     private List<Seccion> seccion;
 

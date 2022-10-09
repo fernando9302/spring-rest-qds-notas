@@ -13,6 +13,7 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "ciclo")
+@ToString(onlyExplicitlyIncluded = true)
 public class Ciclo {
 
     public Ciclo(Integer anio, String numeroCiclo, LocalDate fechaInicio, LocalDate fechaFin) {
@@ -40,6 +41,7 @@ public class Ciclo {
     @Column(name = "fecha_fin", nullable = false)
     private LocalDate fechaFin;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "ciclo")
     private List<Seccion> seccion;
 

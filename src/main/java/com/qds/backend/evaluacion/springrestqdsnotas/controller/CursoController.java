@@ -19,7 +19,7 @@ import java.util.List;
 
 @Api(tags = "Cursos", description = "Servicio para administrar cursos")
 @RestController
-@RequestMapping("/cursos")
+@RequestMapping("/v1/cursos")
 public class CursoController {
 
     @Autowired

@@ -1,7 +1,6 @@
 package com.qds.backend.evaluacion.springrestqdsnotas.security.entryPoint;
 
 import java.io.IOException;
-import java.io.Serializable;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

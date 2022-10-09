@@ -11,6 +11,7 @@ import javax.persistence.*;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "usuario")
+@ToString
 public class Usuario {
 
     @Column
@@ -22,6 +23,7 @@ public class Usuario {
     @Column(length = 50, nullable = false)
     private String nombre;
 
+    @ToString.Exclude
     @Column(length = 1000, nullable = false)
     private String contrasenia;
 

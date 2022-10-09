@@ -3,11 +3,13 @@ package com.qds.backend.evaluacion.springrestqdsnotas.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@ToString
 public class NotaDto {
 
     @ApiModelProperty(notes = "Curso", example = "Programación")

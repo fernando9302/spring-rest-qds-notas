@@ -16,7 +16,7 @@ import java.util.List;
 
 @Api(tags = "Alumnos", description = "Servicio para administrar alumnos")
 @RestController
-@RequestMapping("/alumnos")
+@RequestMapping("/v1/alumnos")
 public class AlumnoController {
 
     @Autowired

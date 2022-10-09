@@ -6,10 +6,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.validator.constraints.Range;
-import org.springframework.beans.factory.annotation.Required;
-
-import javax.validation.constraints.NotNull;
 
 
 @Data

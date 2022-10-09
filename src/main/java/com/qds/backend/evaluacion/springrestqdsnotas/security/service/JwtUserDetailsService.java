@@ -25,9 +25,9 @@ public class JwtUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String nombreUsuario) throws UsernameNotFoundException {
         //return new User("fernando", "{noop}12345", new ArrayList<>());
         Optional<Usuario> usuarioEncontrado = usuarioRepository.findByNombre(nombreUsuario);
-        List<GrantedAuthority> roles = new ArrayList<>();
-        roles.add(new SimpleGrantedAuthority(usuarioEncontrado.get().getRol().getDescripcion()));
         if(usuarioEncontrado.isPresent()){
+            List<GrantedAuthority> roles = new ArrayList<>();
+            roles.add(new SimpleGrantedAuthority(usuarioEncontrado.get().getRol().getDescripcion()));
                 return new User(nombreUsuario, usuarioEncontrado.get().getContrasenia(), roles );
         }else{
             throw new UsernameNotFoundException(nombreUsuario);

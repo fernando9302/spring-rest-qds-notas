@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -14,6 +13,7 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "alumno")
+@ToString(onlyExplicitlyIncluded = true)
 public class Alumno {
 
     @Column
@@ -47,9 +47,11 @@ public class Alumno {
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     private Usuario usuario;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "alumno")
     private List<AlumnoSeccion> alumnoSeccion;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "alumnoSeccion")
     private List<Nota> notas;
 

@@ -12,6 +12,7 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "seccion")
+@ToString(onlyExplicitlyIncluded = true)
 public class Seccion {
 
     @Column
@@ -32,12 +33,19 @@ public class Seccion {
     @JoinColumn(name = "id_profesor")
     private Profesor profesor;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "seccion")
     private List<AlumnoSeccion> alumnosSeccion;
 
     public Seccion(Ciclo ciclo, Curso curso) {
         this.ciclo = ciclo;
         this.curso = curso;
+    }
+
+    public Seccion(Ciclo ciclo, Curso curso, Profesor profesor) {
+        this.ciclo = ciclo;
+        this.curso = curso;
+        this.profesor = profesor;
     }
 
     public Seccion(Integer id) {

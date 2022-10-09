@@ -3,7 +3,6 @@ package com.qds.backend.evaluacion.springrestqdsnotas.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter
@@ -12,6 +11,7 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "tipo_evaluacion")
+@ToString(onlyExplicitlyIncluded = true)
 public class TipoEvaluacion {
     @Column
     @Id
