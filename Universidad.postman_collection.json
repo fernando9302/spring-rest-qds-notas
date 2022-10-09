@@ -64,13 +64,25 @@
 					"name": "Autenticar",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "rrodriguez",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "12345",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"usuario\": \"ggomez\",\r\n    \"contrasenia\": \"12345\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -330,7 +342,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnZ29tZXoiLCJleHAiOjE2NjUzMTgyNzUsImlhdCI6MTY2NTMwMDI3NX0.AMCfgRZZP2fTZ578z0S-J5-YQGN-M_owAoJa3c6BJBJ0yUF08JJQIKhZ5KgFKNsxjz2_BDajb6ApbXSjcUGdoQ",
+				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJycm9kcmlndWV6IiwiZXhwIjoxNjY1MzI1NTM4LCJpYXQiOjE2NjUzMDc1Mzh9.FQKRtQxSwBYxD_14U9kvafFs6pMfH40QRRZr13-HJwLahWFcHp-iZcK6sgSlYWUG_koCdgPK9hcfewUj5LGEww",
 				"type": "string"
 			}
 		]

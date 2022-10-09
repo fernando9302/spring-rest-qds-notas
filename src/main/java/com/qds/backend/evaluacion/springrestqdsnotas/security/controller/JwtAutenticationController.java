@@ -4,8 +4,11 @@ import com.qds.backend.evaluacion.springrestqdsnotas.security.request.JwtRequest
 import com.qds.backend.evaluacion.springrestqdsnotas.security.response.JwtResponse;
 import com.qds.backend.evaluacion.springrestqdsnotas.security.service.JwtUserDetailsService;
 import com.qds.backend.evaluacion.springrestqdsnotas.security.util.JwtTokenUtil;
+import com.qds.backend.evaluacion.springrestqdsnotas.utilitario.Util;
 import io.swagger.annotations.*;
+import org.apache.tomcat.util.http.HeaderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -29,12 +32,12 @@ public class JwtAutenticationController {
 
     @ApiOperation(value = "Autenticar", authorizations = {@Authorization(value = "")})
     @PostMapping(value = "/autenticar")
-    @ApiImplicitParams({
-            //Overriding global behavior.
-            @ApiImplicitParam(
-                    name = "Authorization", value = "")
-    })
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest autenticacionRequest) throws Exception {
+    public ResponseEntity<JwtResponse> autenticar(@RequestHeader("authorization") String authorization) throws Exception {
+        String[] credenciales = Util.obtenerBasicAuth(authorization);
+
+        JwtRequest autenticacionRequest = new JwtRequest();
+        autenticacionRequest.setUsuario(credenciales[0]);
+        autenticacionRequest.setContrasenia(credenciales[1]);
 
         authenticate(autenticacionRequest.getUsuario(), autenticacionRequest.getContrasenia());
 
@@ -43,7 +46,7 @@ public class JwtAutenticationController {
 
         final String token = jwtTokenUtil.generarToken(userDetails);
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        return new ResponseEntity<>(new JwtResponse(token), HttpStatus.OK);
     }
 
     private void authenticate(String username, String password) throws Exception {
