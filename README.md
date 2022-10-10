@@ -139,3 +139,9 @@ Adicionalmente, el servicio está alojado en heroku, con base datos mysql en goo
 El servicio se encuentra en la siguiente url:
 
 `https://spring-java-universidad-v1.herokuapp.com/`
+
+Swagger en heroku:
+
+`https://spring-java-universidad-v1.herokuapp.com/swagger-ui.html`
+
+*Considerar reemplazar `http://localhost:7890` por `https://spring-java-universidad-v1.herokuapp.com/`*
