@@ -134,4 +134,9 @@ Para conocer la documentación de los servicios, se ha implementado la herramien
 
 Además se está compartiendo también la colección de postman para las pruebas. Se encuentra en el archivo raiz con el nombre `Universidad.postman_collection.json`
 
+### Host
+Adicionalmente, el servicio está alojado en heroku, con base datos mysql en google cloud.
 
+El servicio se encuentra en la siguiente url:
+
+`https://spring-java-universidad-v1.herokuapp.com/`
