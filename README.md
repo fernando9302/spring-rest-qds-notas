@@ -9,12 +9,11 @@ En la raíz de este proyecto se encuentra un documento PDF llamado `Prueba tecni
 Se optó por usar Spring Boot con el objetivo de disminuir las tareas de configuración. Además se está usando Maven como herramienta para gestionar las dependencias y faicilitar la construcción del jar.
 
 ## Base de datos
-El servicio está configurado para trabajar con una base de datos MySql v8. El servicio está hecho con JPA con implementación en Hibernate. Para ejecutar la aplicación, es necesario que se cree una base de datos vacia con el nombre universidad.
-Luego levantar 
+El servicio está configurado para trabajar con una base de datos MySql v8. El servicio está hecho con JPA con implementación en Hibernate. El servicio esta configurado para trabajar con una bd en la nube de google, si se desea probar de manera local, es necesario que se cree una base de datos vacia con el nombre universidad en un servidor local y modificar en el archivo `pom.xml` la ruta de la bd. 
 
 ## Configuración de ambiente
 
-Se debe clonar este repositorio, luego abrirlo en un IDE(Intellij idea, Eclipse, sts, etc). Luego, crear una base de datos vacia con el nombre `universidad`
+Se debe clonar este repositorio, luego abrirlo en un IDE(Intellij idea, Eclipse, sts, etc). Luego, crear una base de datos vacia con el nombre `universidad` (solo en casos que se desea probar de manera local)
 
 ## Iniciar servicio rest
 
