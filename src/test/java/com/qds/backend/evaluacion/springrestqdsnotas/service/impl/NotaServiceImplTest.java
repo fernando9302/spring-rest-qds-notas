@@ -70,9 +70,12 @@ class NotaServiceImplTest {
         Mockito.when(iNotaRepository.save(any())).thenReturn(new Nota(1, new AlumnoSeccion(1), new TipoEvaluacion(3) ));
         Mockito.when(iNotaRepository.findById(any())).thenReturn(Optional.of(new Nota(1, new AlumnoSeccion(1), new TipoEvaluacion(3) )));
         Mockito.when(iUsuarioRepository.findByNombre("jlopez")).thenReturn(Optional.of(new Usuario(6)));
+        Mockito.when(iUsuarioRepository.findByNombre("rperez")).thenReturn(Optional.of(new Usuario(7)));
         Mockito.when(iProfesorRepository.findOneByUsuarioNombre("jlopez")).thenReturn(Optional.of(new Profesor(1)));
+        Mockito.when(iProfesorRepository.findOneByUsuarioNombre("rperez")).thenReturn(Optional.of(new Profesor(2)));
         Mockito.when(iNotaRepository.findOneByTipoEvaluacionIdAndAlumnoSeccionAlumnoIdAndAlumnoSeccionSeccionId(4,2,1)).thenReturn(Optional.of(new Nota(1)));
         Mockito.when(iSeccionRepository.findOneByIdAndProfesorUsuarioNombre(1, "jlopez")).thenReturn(Optional.of(new Seccion(1)));
+        Mockito.when(iSeccionRepository.findOneByIdAndProfesorUsuarioNombre(2, "rperez")).thenReturn(Optional.of(new Seccion(2)));
     }
 
     @Test
@@ -124,7 +127,7 @@ class NotaServiceImplTest {
         NegocioValidacionException thrownCalificacionNoExiste = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,3,3, 15, "jlopez"));});
         assertEquals(thrownCalificacionNoExiste.getMessage(), "El alumno no está inscrito en la sección");
 
-        NegocioValidacionException thrownProfesorEnSeccion = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,2,3, 18, "raaa"));});
+        NegocioValidacionException thrownProfesorEnSeccion = assertThrows(NegocioValidacionException.class, () -> {notaService.crearNota(new NotaRequest(1,2,3, 18, "rperez"));});
         assertEquals(thrownProfesorEnSeccion.getMessage(), "El profesor no es el responsable de la sección");
     }
 

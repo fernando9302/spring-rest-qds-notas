@@ -107,6 +107,10 @@ public class NotaServiceImpl implements INotaService {
             throw new NegocioValidacionException(Util.MENSAJE_SOLO_PROFESORES);
         }
 
+        if(!existeProfesorEnSeccion(notaRequest.getIdSeccion(), notaRequest.getNombreUsuario())){
+            throw new NegocioValidacionException(Util.MENSAJE_PROFESOR_NO_ENSENIA_SECCION);
+        }
+
         Nota nota = iNotaRepository.findOneByTipoEvaluacionIdAndAlumnoSeccionAlumnoIdAndAlumnoSeccionSeccionId(notaRequest.getIdTipoEvaluacion(), notaRequest.getIdAlumno(),notaRequest.getIdSeccion()).orElse(null);
         if(nota != null){
             throw new NegocioValidacionException(Util.MENSAJE_NOTA_YA_REGISTRADA);
@@ -126,9 +130,7 @@ public class NotaServiceImpl implements INotaService {
         if (!existeAlumnoSeccionPorId(notaRequest.getIdSeccion(), notaRequest.getIdAlumno())) {
             throw new NegocioValidacionException(Util.MENSAJE_ALUMNO_NO_INSCRITO_SECCION);
         }
-        if(!existeProfesorEnSeccion(notaRequest.getIdSeccion(), notaRequest.getNombreUsuario())){
-            throw new NegocioValidacionException(Util.MENSAJE_PROFESOR_NO_ENSENIA_SECCION);
-        }
+
     }
 
     private boolean existeProfesorEnSeccion(Integer idSeccion, String nombreUsuario) {

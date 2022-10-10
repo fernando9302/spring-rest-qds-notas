@@ -66,8 +66,8 @@ class NotaControllerTest {
     void listarNotas() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/notas")
-                        .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJycm9kcmlndWV6IiwiZXhwIjoxNjY1MzIwMTQ2LCJpYXQiOjE2NjUzMDIxNDZ9.PLscaXZnTrWIMtlvOu5XGwt8CvWhN1h2SyuqUcvCnAYoUS2r04m1-ps2u1y_or1tDWfkvbQPd2pqC6wbkcxQqA")
+                        .get("/v1/notas")
+                        .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjcmFtaXJleiIsImV4cCI6MTY2NTcyMjQxOSwiaWF0IjoxNjY1MzYyNDE5fQ.aGq4VVR8fZPdWoSyr9nMVjnoL5bHRM9xjF0aVOEmvyAxEi0kNINr2Z00TAtQKihp_ysCSrQc7Tn7C9inyUIGIA")
                         .content(MediaType.APPLICATION_JSON_VALUE)
                 )
                 .andExpect(status().isOk())
@@ -78,11 +78,11 @@ class NotaControllerTest {
     @Test
     void crearNota() throws Exception {
         NotaRequest notaRequest = NotaRequest.builder().idAlumno(1).idSeccion(2).idTipoEvaluacion(3).calificacion(15).build();
-        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/notas")
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/v1/notas")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(notaRequest))
-                .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJycm9kcmlndWV6IiwiZXhwIjoxNjY1MzIwMTQ2LCJpYXQiOjE2NjUzMDIxNDZ9.PLscaXZnTrWIMtlvOu5XGwt8CvWhN1h2SyuqUcvCnAYoUS2r04m1-ps2u1y_or1tDWfkvbQPd2pqC6wbkcxQqA");
+                .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjcmFtaXJleiIsImV4cCI6MTY2NTcyMjQxOSwiaWF0IjoxNjY1MzYyNDE5fQ.aGq4VVR8fZPdWoSyr9nMVjnoL5bHRM9xjF0aVOEmvyAxEi0kNINr2Z00TAtQKihp_ysCSrQc7Tn7C9inyUIGIA");
 
         mockMvc.perform(mockRequest)
                 .andExpect(status().isCreated())
