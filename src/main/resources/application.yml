@@ -12,10 +12,10 @@ spring:
     name: spring-rest-qds-notas
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://34.176.255.178:3306/universidad
-    #url: jdbc:mysql://localhost:3306/universidad 
-    username: root
-    password: 12345
+    url: jdbc:mysql://sql10.freemysqlhosting.net/sql10526817
+    #url: jdbc:mysql://localhost:3306/universidad
+    username: sql10526817
+    password: t9ymGeziqu
   jpa:
     hibernate:
       ddl-auto: update
