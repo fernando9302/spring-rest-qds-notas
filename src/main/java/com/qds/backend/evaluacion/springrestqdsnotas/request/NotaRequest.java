@@ -6,6 +6,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotNull;
 
 
 @Data
@@ -14,20 +17,20 @@ import lombok.Data;
 public class NotaRequest {
 
     @ApiModelProperty(notes = "Sección Id", example = "1", required = true)
-    //@NotNull(message = "Debe ingresar el id de la Sección")
+    @NotNull(message = "Debe ingresar el id de la Sección")
     private Integer idSeccion;
 
     @ApiModelProperty(notes = "Alumno Id", example = "1", required = true)
-    //@NotNull(message = "Debe ingresar el id del alumno")
+    @NotNull(message = "Debe ingresar el id del alumno")
     private Integer idAlumno;
 
     @ApiModelProperty(notes = "Tipo Evaluación Id", example = "1", required = true)
-    //@NotNull(message = "Debe ingresar el id del tipo evaluación")
+    @NotNull(message = "Debe ingresar el id del tipo evaluación")
     private Integer idTipoEvaluacion;
 
     @ApiModelProperty(notes = "Calificación", example = "1", required = true)
-    //@NotNull
-    //@Range(min = 0, max = 20, message = "La calificación debe ser mínimo 0 y máximo 20")
+    @NotNull
+    @Range(min = 0, max = 20, message = "La calificación debe ser mínimo 0 y máximo 20")
     private Integer calificacion;
 
     @JsonIgnore
